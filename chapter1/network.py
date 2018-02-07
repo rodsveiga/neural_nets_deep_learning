@@ -28,7 +28,7 @@ class Network(object):
         self.weights = [np.random.randn(y, x)
                         for x, y in zip(sizes[:-1], sizes[1:])]
         
-         """The list ``sizes`` contains the number of neurons in the
+        """The list ``sizes`` contains the number of neurons in the
         respective layers of the network.  For example, if the list
         was [2, 3, 1] then it would be a three-layer network, with the
         first layer containing 2 neurons, the second layer 3 neurons,
@@ -45,7 +45,7 @@ class Network(object):
     def feedforward(self, a):
         """Return the output of the network if ``a`` is input."""
         for b, w in zip(self.biases, self.weights):
-            a = sigmoid( np.dot(w, a) + b)
+            a = sigmoid(np.dot(w, a) + b)
         return a
     
     """#######################################################################"""
@@ -76,7 +76,7 @@ class Network(object):
             else:
                 print("Epoch {} complete".format(j))
                 
-    """The ``training_data`` is a list of tuples ``(x, y)`` representing the 
+        """The ``training_data`` is a list of tuples ``(x, y)`` representing the 
         training inputs and the desired outputs.  The other non-optional parameters are
         self-explanatory.  If ``test_data`` is provided then the network will be 
         evaluated against the test data after each epoch, and partial progress printed out.
@@ -117,7 +117,7 @@ class Network(object):
             for b, nb in zip(self.biases, nabla_b)
         ]
         
-    """This method invokes something called the backpropagation algorithm, 
+        """This method invokes something called the backpropagation algorithm, 
         which is a fast way of computing the gradient of the cost function. So
         ``update_mini_batch`` works simply by computing these gradients for every
         training example in the ``mini_batch``, and then updating ``self.weights``
@@ -126,9 +126,9 @@ class Network(object):
     """#######################################################################"""
       
     def backprop(self, x, y):
-         """Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the
+        """Return a tuple ``(nabla_b, nabla_w)`` representing the gradient for the
         cost function C_x. ``nabla_b`` and ``nabla_w`` are layer-by-layer lists 
-        of numpy arrays, similar to ``self.biases`` and ``self.weights``."""
+        of numpy arrays, similar to ``self.biases`` and ``self.weights``."""   
         nabla_b = [np.zeros(b.shape) for b in self.biases]
         nabla_w = [np.zeros(w.shape) for w in self.weights]
       
@@ -137,7 +137,7 @@ class Network(object):
         activations = [x] # List to store all the activations, layer by layer
         zs = [] # List to store all the z vector, layer by layer
         
-         for b, w in zip(self.biases, self.weights):
+        for b, w in zip(self.biases, self.weights):
             z = np.dot(w, activation) + b
             zs.append(z)
             activation = sigmoid(z)
@@ -156,11 +156,11 @@ class Network(object):
         # the fact that Python can use negative indices in lists.
         
         for l in range(2, self.num_layers):
-            z = zs[-1]
+            z = zs[-l]
             sp = sigmoid_prime(z)
             delta = np.dot(self.weights[-l + 1].transpose(), delta) * sp
-            nabla_b[-1] = delta
-            nabla_w[-1] = np.dot(delta, activations[-l + 1].transpose())
+            nabla_b[-l] = delta
+            nabla_w[-l] = np.dot(delta, activations[-l - 1].transpose())
             
         return (nabla_b, nabla_w)
     
